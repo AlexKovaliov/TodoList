@@ -13,7 +13,7 @@ export type FilterValuesType = "all" | "active" | "completed";
 
 function App() {
 
-    let [tasks, setTasks] = useState([
+    let [tasks, setTasks] = useState <Array<TaskType>> ([
         {id: v1(), title: "HTML", isDone: true},
         {id: v1(), title: "JS", isDone: false},
         {id: v1(), title: "CSS", isDone: false},
@@ -28,9 +28,17 @@ function App() {
         setTasks(filteredTasks);
     }
 
+    function changeStatus(id: string, isDone: boolean) {
+       let task = tasks.find(t => t.id === id);
+       if (task) {
+           task.isDone = isDone;
+           setTasks([...tasks]);
+       }
+    }
+
     function addTask(newTaskName: string) {
         let newTask = {id: v1(), title: newTaskName, isDone: false}
-        let newTasks = [newTask, ...tasks];
+        let newTasks = [newTask, ...tasks]; // ... - это спред оператор
         setTasks(newTasks);
     }
 
@@ -53,6 +61,8 @@ function App() {
                 removeTask={removeTask}
                 changeFilter={changeFilter}
                 addTask={addTask}
+                changeStatus={changeStatus}
+                filter={filter}
             />
         </div>
     );
