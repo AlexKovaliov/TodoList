@@ -1,7 +1,9 @@
-import React, {useState, ChangeEvent, KeyboardEvent} from "react";
+import React, {ChangeEvent} from "react";
 import {FilterValuesType, TaskType} from "./App";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
+import {Button, IconButton, Checkbox} from "@material-ui/core";
+import {Delete} from "@material-ui/icons";
 
 type PropsType = {
     id: string
@@ -74,7 +76,10 @@ export function TodoList(props: PropsType) {
     return (
         <div>
             <h3><EditableSpan title={props.title} saveNewTitle={changeTodoListTitle}/>
-                <button style={{cursor: "pointer"}} onClick={onClickRemoveTodoList}>Delete</button>
+                <IconButton onClick={onClickRemoveTodoList}>
+                    <Delete fontSize="small"/>
+                </IconButton>
+                {/*<button style={{cursor: "pointer"}} onClick={onClickRemoveTodoList}>Delete</button>*/}
             </h3>
 
             <AddItemForm addItem={addTask}/>
@@ -89,9 +94,9 @@ export function TodoList(props: PropsType) {
                 />
                 <button style={{cursor: "pointer"}} onClick={addTask}>Add</button>
                 {error && <div className={"error-message"}>{error}</div>}
-            </div>
-*/}
-            <ul>
+            </div>*/}
+
+            <div>
                 {props.tasks.map((t) => {
                     let removeTask = () => {
                         props.removeTask(t.id, props.id)
@@ -107,23 +112,25 @@ export function TodoList(props: PropsType) {
                     }
 
                     return (
-                        <li key={t.id} className={t.isDone ? "is-done" : ""}>
-                            <input
-                                type="checkbox"
+                        <div key={t.id} className={t.isDone ? "is-done" : ""}>
+                            <Checkbox
+                                color={"primary"}
                                 checked={t.isDone}
                                 onChange={changeStatus}
                             />
                             <EditableSpan title={t.title} saveNewTitle={changeTaskTitle}/>
+                            <IconButton onClick={removeTask} >
+                                <Delete fontSize="small"/>
+                            </IconButton>
                             {/*<span>{t.title}</span>*/}
-                            <button style={{cursor: "pointer"}} onClick={removeTask}>Delete</button>
-                        </li>
+                            {/*<button style={{cursor: "pointer"}} onClick={removeTask}>Delete</button>*/}
+                        </div>
                     )
-
                 })}
-            </ul>
+            </div>
 
             <div>
-                <button style={{cursor: "pointer"}}
+                {/*<button style={{cursor: "pointer"}}
                         className={props.filter === "all" ? "active" : ""}
                         onClick={onAllClickHeanler}>All
                 </button>
@@ -134,7 +141,24 @@ export function TodoList(props: PropsType) {
                 <button style={{cursor: "pointer"}}
                         className={props.filter === "completed" ? "active" : ""}
                         onClick={onACompletedlickHeanler}>Completed
-                </button>
+                </button>*/}
+                <Button
+                    variant={props.filter === "all" ? "contained" : "outlined"}
+                    color={props.filter === "all" ? "primary" : "default"}
+                    onClick={onAllClickHeanler}>All
+                </Button>
+
+                <Button
+                    variant={props.filter === "active" ? "contained" : "outlined"}
+                    color={props.filter === "active" ? "primary" : "default"}
+                    onClick={onActiveClickHeanler}>Active
+                </Button>
+
+                <Button
+                    variant={props.filter === "completed" ? "contained" : "outlined"}
+                    color={props.filter === "completed" ? "primary" : "default"}
+                    onClick={onACompletedlickHeanler}>Completed
+                </Button>
             </div>
 
         </div>

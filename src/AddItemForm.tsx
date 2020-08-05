@@ -1,4 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
+import {IconButton, TextField} from "@material-ui/core";
+import {AddBox} from "@material-ui/icons";
 
 
 type PropsType = {
@@ -34,15 +36,29 @@ export function AddItemForm(props: PropsType) {
 
     return (
         <div>
-            <input
+            <TextField
+                size={"small"}
+                variant={"outlined"}
+                value={newItemName}
+                onChange={onItemNameChanged}
+                onKeyPress={onAddItemKeyPressed}
+                /*className={error ? "error" : ""}*/
+                error={!!error}
+                label={"Set a goal - achieve it!"}
+                helperText={error}
+            />
+            {/*<input
                 type="text"
                 value={newItemName}
                 onChange={onItemNameChanged}
                 onKeyPress={onAddItemKeyPressed}
                 className={error ? "error" : ""} //тернарный оператор
-            />
-            <button style={{cursor: "pointer"}} onClick={addItem}>Add</button>
-            {error && <div className={"error-message"}>{error}</div>}
+            />*/}
+            {/*<button style={{cursor: "pointer"}} onClick={addItem}>Add</button>*/}
+            <IconButton onClick={addItem} color={"primary"}>
+                <AddBox/>
+            </IconButton>
+            {/*{error && <div className={"error-message"}>{error}</div>}*/}
         </div>
     )
 }
