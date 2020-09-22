@@ -21,7 +21,7 @@ export type TodoListType = {
     filter: FilterValuesType
 }
 
-type TaskStateType = {
+export type TasksStateType = {
     [key: string]: Array<TaskType>
 }
 
@@ -41,7 +41,7 @@ function App() {
     ])
 
 
-    let [tasks, setTasks] = useState<TaskStateType>({
+    let [tasks, setTasks] = useState<TasksStateType>({
         [todoListID1]: [     //[todoListID1] используем вместо имени т.к ID всегда есть у таски
             {id: v1(), title: "HTML", isDone: true},
             {id: v1(), title: "JS", isDone: false},
@@ -57,12 +57,16 @@ function App() {
     /*let [filter, setFilter] = useState<FilterValuesType>("all")*/
 
     function removeTask(taskId: string, todoListID: string) {
+        // достаём нужный массив по todolistId
         let todoListTasks = tasks[todoListID];
+        // перезапишем в этом объекте массив для нужного тудулиста отфильтрованным массивом
         tasks[todoListID] = todoListTasks.filter(t => t.id !== taskId);
+        // засетаем в стейт копию объекта, чтобы React отреагировал перерисовкой
         setTasks({...tasks});
     }
 
     function changeTaskStatus(taskId: string, isDone: boolean, todoListID: string) {
+        // достаём нужный массив по todolistId
         let todoListTasks = tasks[todoListID];
         let task = todoListTasks.find(t => t.id === taskId);
         if (task) {
@@ -80,10 +84,10 @@ function App() {
         }
     }
 
-    function addTask(newTaskName: string, todoListID: string) {
+    function addTask(newTaskName: string, todoListId: string) {
         let newTask = {id: v1(), title: newTaskName, isDone: false};
-        let todoListTasks = tasks[todoListID];
-        tasks[todoListID] = [newTask, ...todoListTasks]; // ... - это спред оператор
+        let todoListTasks = tasks[todoListId];
+        tasks[todoListId] = [newTask, ...todoListTasks]; // ... - это спред оператор
         setTasks({...tasks});
     }
 
