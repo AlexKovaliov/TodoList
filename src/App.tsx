@@ -27,11 +27,6 @@ export type TasksStateType = {
 
 function App() {
 
-    /*let [tasks, setTasks] = useState<Array<TaskType>>([
-
-
-    ]);*/
-
     let todoListID1 = v1();
     let todoListID2 = v1();
 
@@ -39,7 +34,6 @@ function App() {
         {id: todoListID1, title: "What to learn", filter: "all"},
         {id: todoListID2, title: "What to buy", filter: "active"},
     ])
-
 
     let [tasks, setTasks] = useState<TasksStateType>({
         [todoListID1]: [     //[todoListID1] используем вместо имени т.к ID всегда есть у таски
@@ -162,7 +156,6 @@ function App() {
                                 <TodoList
                                     key={tl.id}
                                     id={tl.id}
-                                    title={tl.title}
                                     tasks={tasksForTodoList}
                                     removeTask={removeTask}
                                     changeTodoListFilter={changeFilter}

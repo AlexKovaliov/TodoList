@@ -4,10 +4,12 @@ import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
 import {Button, IconButton, Checkbox} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
+import {useSelector} from "react-redux";
+import {AppRootStateType} from "./state/store";
+import {TodoListType} from "./AppWithRedux";
 
 type PropsType = {
     id: string
-    title: string
     filter: FilterValuesType
     tasks: Array<TaskType>
     addTask: (newTaskName: string, todoListID: string) => void
@@ -20,41 +22,21 @@ type PropsType = {
 }
 
 export function TodoList(props: PropsType) {
-    /*let [taskName, setTaskName] = useState<string>("");
-    let [error, setError] = useState<string | null>(null);*/
 
-    /*let addTask = () => {
-        if (taskName.trim()) {
-            props.addTask(taskName.trim(), props.id);
-            setTaskName("");
-        } else {
-            setError("Title is required! (Write smth)")
-        }
-    }*/
-    /*
+    let todo = useSelector<AppRootStateType, TodoListType | undefined>(
+        state => state.todoLists.find(todo => {
+            return todo && todo.id === props.id
+        }))
 
-        function onTaskNameChanged(event: ChangeEvent<HTMLInputElement>) {
-            setTaskName(event.currentTarget.value);
-            setError(null)
-        }
-    */
-
-    /*
-        function onAddTaskKeyPressed(event: KeyboardEvent<HTMLInputElement>) {
-            if (event.key === "Enter") {
-                addTask()
-            } // event - обьект события
-        }*/
-
-    function onAllClickHeanler() {
+    function onAllClickHandler() {
         props.changeTodoListFilter("all", props.id);
     }
 
-    function onActiveClickHeanler() {
+    function onActiveClickHandler() {
         props.changeTodoListFilter("active", props.id);
     }
 
-    function onACompletedlickHeanler() {
+    function onCompletedClickHandler() {
         props.changeTodoListFilter("completed", props.id);
     }
 
@@ -75,7 +57,7 @@ export function TodoList(props: PropsType) {
 
     return (
         <div>
-            <h3><EditableSpan title={props.title} saveNewTitle={changeTodoListTitle}/>
+            <h3><EditableSpan title={todo ? todo.title : ''} saveNewTitle={changeTodoListTitle}/>
                 <IconButton onClick={onClickRemoveTodoList}>
                     <Delete fontSize="small"/>
                 </IconButton>
@@ -119,7 +101,7 @@ export function TodoList(props: PropsType) {
                                 onChange={changeStatus}
                             />
                             <EditableSpan title={t.title} saveNewTitle={changeTaskTitle}/>
-                            <IconButton onClick={removeTask} >
+                            <IconButton onClick={removeTask}>
                                 <Delete fontSize="small"/>
                             </IconButton>
                             {/*<span>{t.title}</span>*/}
@@ -132,32 +114,32 @@ export function TodoList(props: PropsType) {
             <div>
                 {/*<button style={{cursor: "pointer"}}
                         className={props.filter === "all" ? "active" : ""}
-                        onClick={onAllClickHeanler}>All
+                        onClick={onAllClickHandler}>All
                 </button>
                 <button style={{cursor: "pointer"}}
                         className={props.filter === "active" ? "active" : ""}
-                        onClick={onActiveClickHeanler}>Active
+                        onClick={onActiveClickHandler}>Active
                 </button>
                 <button style={{cursor: "pointer"}}
                         className={props.filter === "completed" ? "active" : ""}
-                        onClick={onACompletedlickHeanler}>Completed
+                        onClick={onCompletedClickHandler}>Completed
                 </button>*/}
                 <Button
                     variant={props.filter === "all" ? "contained" : "outlined"}
                     color={props.filter === "all" ? "primary" : "default"}
-                    onClick={onAllClickHeanler}>All
+                    onClick={onAllClickHandler}>All
                 </Button>
 
                 <Button
                     variant={props.filter === "active" ? "contained" : "outlined"}
                     color={props.filter === "active" ? "primary" : "default"}
-                    onClick={onActiveClickHeanler}>Active
+                    onClick={onActiveClickHandler}>Active
                 </Button>
 
                 <Button
                     variant={props.filter === "completed" ? "contained" : "outlined"}
                     color={props.filter === "completed" ? "primary" : "default"}
-                    onClick={onACompletedlickHeanler}>Completed
+                    onClick={onCompletedClickHandler}>Completed
                 </Button>
             </div>
 
