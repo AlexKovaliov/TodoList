@@ -154,6 +154,7 @@ function App() {
                         <Grid item>
                             <Paper style={{padding: "20px"}} elevation={5}>
                                 <TodoList
+                                    title={tl.title}
                                     key={tl.id}
                                     id={tl.id}
                                     tasks={tasksForTodoList}

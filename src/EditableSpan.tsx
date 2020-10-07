@@ -7,18 +7,18 @@ type PropsType = {
 }
 
 // функция позволяющая переименовывать name
-export function EditableSpan(props: PropsType) {
+export const EditableSpan = React.memo((props: PropsType) => {
 
-    let [editeMode, setEditMode] = useState<boolean>(false);
+    let [editaMode, setEditMode] = useState<boolean>(false);
 
     let [title, setTitle] = useState<string>(props.title)
 
-    function activateEditeMode() {
+    function activateEditaMode() {
         setEditMode(true)
         // setTitle(props.title)
     }
 
-    function deActivateEditeMode() {
+    function deActivateEditaMode() {
         setEditMode(false)
         props.saveNewTitle(title) //как только закончили ввод, хотим новое значение сетнуть в app
     }
@@ -27,13 +27,13 @@ export function EditableSpan(props: PropsType) {
         setTitle(event.currentTarget.value)
     }
 
-    return editeMode
+    return editaMode
         ? <TextField
             variant={"outlined"}
             value={title}
-            onBlur={deActivateEditeMode}
+            onBlur={deActivateEditaMode}
             autoFocus={true}
             onChange={changeTitle}/>
-        /*? <input value={title} onBlur={deActivateEditeMode} autoFocus={true} onChange={changeTitle}/>*/
-        : <span onDoubleClick={activateEditeMode}>{props.title}</span>
-}
+        /*? <input value={title} onBlur={deActivateEditaMode} autoFocus={true} onChange={changeTitle}/>*/
+        : <span onDoubleClick={activateEditaMode}>{props.title}</span>
+})

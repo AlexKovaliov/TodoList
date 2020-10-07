@@ -3,11 +3,11 @@ import {IconButton, TextField} from "@material-ui/core";
 import {AddBox} from "@material-ui/icons";
 
 
-type PropsType = {
+type AddItemFormPropsType = {
     addItem: (title: string) => void
 }
 
-export function AddItemForm(props: PropsType) {
+export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
 
     let [newItemName, setItemName] = useState<string>("");
     let [error, setError] = useState<string | null>(null);
@@ -19,6 +19,9 @@ export function AddItemForm(props: PropsType) {
     }
 
     function onAddItemKeyPressed(event: KeyboardEvent<HTMLInputElement>) {
+        if (error !== null) {
+            setError(null)
+        }
         if (event.key === "Enter") {
             addItem()
         } // event - обьект события
@@ -61,4 +64,4 @@ export function AddItemForm(props: PropsType) {
             {/*{error && <div className={"error-message"}>{error}</div>}*/}
         </div>
     )
-}
+})
