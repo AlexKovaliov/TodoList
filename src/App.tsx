@@ -35,6 +35,8 @@ function App() {
         {id: todoListID2, title: "What to buy", filter: "active"},
     ])
 
+    // let todoLists = useSelector<AppRootStateType, Array<TodoListType>>(state => state.todoLists)
+
     let [tasks, setTasks] = useState<TasksStateType>({
         [todoListID1]: [     //[todoListID1] используем вместо имени т.к ID всегда есть у таски
             {id: v1(), title: "HTML", isDone: true},
@@ -144,10 +146,10 @@ function App() {
 
                     let tasksForTodoList = tasks[tl.id];
                     if (tl.filter === "active") {
-                        tasksForTodoList = tasks[tl.id].filter(t => t.isDone === false)
+                        tasksForTodoList = tasks[tl.id].filter(t => !t.isDone)
                     }
                     if (tl.filter === "completed") {
-                        tasksForTodoList = tasks[tl.id].filter(t => t.isDone === true)
+                        tasksForTodoList = tasks[tl.id].filter(t => t.isDone)
                     }
 
                     return (
@@ -174,8 +176,7 @@ function App() {
                 }</Grid>
             </Container>
         </div>
-    )
-        ;
+    );
 }
 
 export default App;

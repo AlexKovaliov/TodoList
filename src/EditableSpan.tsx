@@ -1,17 +1,17 @@
 import React, {ChangeEvent, useState} from "react";
 import {TextField} from "@material-ui/core";
 
-type PropsType = {
-    title: string
+type EditableSpanPropsType = {
+    value: string
     saveNewTitle: (newTitle: string) => void
 }
 
 // функция позволяющая переименовывать name
-export const EditableSpan = React.memo((props: PropsType) => {
+export const EditableSpan = React.memo((props: EditableSpanPropsType) => {
 
     let [editaMode, setEditMode] = useState<boolean>(false);
 
-    let [title, setTitle] = useState<string>(props.title)
+    let [title, setTitle] = useState<string>(props.value)
 
     function activateEditaMode() {
         setEditMode(true)
@@ -35,5 +35,5 @@ export const EditableSpan = React.memo((props: PropsType) => {
             autoFocus={true}
             onChange={changeTitle}/>
         /*? <input value={title} onBlur={deActivateEditaMode} autoFocus={true} onChange={changeTitle}/>*/
-        : <span onDoubleClick={activateEditaMode}>{props.title}</span>
+        : <span onDoubleClick={activateEditaMode}>{props.value}</span>
 })

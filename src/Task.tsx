@@ -32,7 +32,7 @@ export const Task = (props: TaskPropsType) => {
                 checked={props.task.isDone}
                 onChange={changeStatus}
             />
-            <EditableSpan title={props.task.title} saveNewTitle={changeTaskTitle}/>
+            <EditableSpan value={props.task.title} saveNewTitle={changeTaskTitle}/>
             <IconButton onClick={removeTask}>
                 <Delete fontSize="small"/>
             </IconButton>
