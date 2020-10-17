@@ -34,7 +34,7 @@ export type TasksStateType = {
     [key: string]: Array<TaskType>
 }
 
-function AppWithRedux() {
+export function AppWithRedux() {
 
     let todoListID1 = v1();
     let todoListID2 = v1();
@@ -130,5 +130,3 @@ function AppWithRedux() {
         </div>
     )
 }
-
-export default AppWithRedux;
