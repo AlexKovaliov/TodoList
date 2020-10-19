@@ -12,7 +12,7 @@ const rootReducer = combineReducers({
     todoLists: todolistReducer
 })
 
-const initialGlobalState = {
+const initialGlobalState: AppRootStateType = {
     todoLists: [
         {id: "todolistId1", title: "What to learn", filter: "all"},
         {id: "todolistId2", title: "What to buy", filter: "all"}
@@ -29,7 +29,7 @@ const initialGlobalState = {
     }
 };
 
-export const storyBookStore = createStore(rootReducer, initialGlobalState as AppRootStateType);
+export const storyBookStore = createStore(rootReducer, initialGlobalState);
 
 export const ReduxStoreProviderDecorator = (storyFn: any) => (
     <Provider
