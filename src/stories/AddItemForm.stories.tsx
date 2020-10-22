@@ -1,16 +1,15 @@
-import React from 'react';
+import React from 'react'
+import {action} from '@storybook/addon-actions'
 import {AddItemForm} from "../AddItemForm";
-import {action} from "@storybook/addon-actions";
 
 
 export default {
-    title: 'TodoLists/AddItemForm',
-    component: AddItemForm,
+    title: 'AddItemForm Stories',
+    component: AddItemForm
 }
 
-export const AddItemFormExample = (props: any) => {
-    console.log("AddItemFormExample")
+export const AddItemFormBaseExample = (props: any) => {
     return (<AddItemForm
-        addItem={action('Clicked')}
+        addItem={action('Button inside form clicked')}
     />)
 }

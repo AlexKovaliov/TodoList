@@ -1,16 +1,13 @@
-import React from 'react';
-import {action} from "@storybook/addon-actions";
+import React from 'react'
+import {action} from '@storybook/addon-actions'
 import {EditableSpan} from "../EditableSpan";
 
 
 export default {
-    title: 'TodoLists/EditableSpan',
-    component: EditableSpan,
+    title: 'EditableSpan Stories',
+    component: EditableSpan
 }
 
-export const EditableSpanExample = (props: any) => {
-    return (<EditableSpan
-        value={'Start'}
-        saveNewTitle={action(" Clicked EditableSpan")}
-    />)
+export const EditableSpanFormBaseExample = (props: any) => {
+    return (<EditableSpan value={"StartValue"} onChange={action("value changed")} />)
 }

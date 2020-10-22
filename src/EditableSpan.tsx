@@ -1,39 +1,29 @@
-import React, {ChangeEvent, useState} from "react";
-import {TextField} from "@material-ui/core";
+import React, {ChangeEvent, useState} from 'react';
+import {TextField} from '@material-ui/core';
 
 type EditableSpanPropsType = {
     value: string
-    saveNewTitle: (newTitle: string) => void
+    onChange: (newValue: string) => void
 }
 
-// функция позволяющая переименовывать name
-export const EditableSpan = React.memo((props: EditableSpanPropsType) => {
+export const EditableSpan = React.memo(function (props: EditableSpanPropsType) {
+    console.log("EditableSpan called");
+    let [editMode, setEditMode] = useState(false);
+    let [title, setTitle] = useState(props.value);
 
-    let [editaMode, setEditMode] = useState<boolean>(false);
-
-    let [title, setTitle] = useState<string>(props.value)
-
-    function activateEditaMode() {
-        setEditMode(true)
-        // setTitle(props.title)
+    const activateEditMode = () => {
+        setEditMode(true);
+        setTitle(props.value);
+    }
+    const activateViewMode = () => {
+        setEditMode(false);
+        props.onChange(title);
+    }
+    const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
+        setTitle(e.currentTarget.value)
     }
 
-    function deActivateEditaMode() {
-        setEditMode(false)
-        props.saveNewTitle(title) //как только закончили ввод, хотим новое значение сетнуть в app
-    }
-
-    function changeTitle(event: ChangeEvent<HTMLInputElement>) {
-        setTitle(event.currentTarget.value)
-    }
-
-    return editaMode
-        ? <TextField
-            variant={"outlined"}
-            value={title}
-            onBlur={deActivateEditaMode}
-            autoFocus={true}
-            onChange={changeTitle}/>
-        /*? <input value={title} onBlur={deActivateEditaMode} autoFocus={true} onChange={changeTitle}/>*/
-        : <span onDoubleClick={activateEditaMode}>{props.value}</span>
-})
+    return editMode
+        ?    <TextField value={title} onChange={changeTitle} autoFocus onBlur={activateViewMode} />
+        : <span onDoubleClick={activateEditMode}>{props.value}</span>
+});
