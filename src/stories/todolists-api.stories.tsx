@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {todolistsAPI} from "../api/todolist-api";
-
+import {todolistsAPI} from '../api/todolists-api'
 
 export default {
     title: 'API'
@@ -9,7 +8,7 @@ export default {
 const settings = {
     withCredentials: true,
     headers: {
-        'API-KEY': '40d9ad0b-5c59-493c-b1f4-22ed9e6cc14c'
+        'API-KEY': '1cdd9f77-c60e-4af5-b194-659e4ebd5d41'
     }
 }
 
