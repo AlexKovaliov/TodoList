@@ -16,10 +16,9 @@ import {ErrorSnackbar} from '../components/ErrorSnackbar/ErrorSnackbar'
 import {useDispatch, useSelector} from 'react-redux'
 import {AppRootStateType} from './store'
 import {initializeAppTC, RequestStatusType} from './app-reducer'
-import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
-import {Login} from "../features/Login/Login";
-import {logoutTC} from "../features/Login/auth-reducer";
-
+import {BrowserRouter, Route} from 'react-router-dom'
+import {Login} from '../features/Login/Login'
+import {logoutTC} from '../features/Login/auth-reducer'
 
 type PropsType = {
     demo?: boolean
@@ -28,9 +27,8 @@ type PropsType = {
 function App({demo = false}: PropsType) {
     const status = useSelector<AppRootStateType, RequestStatusType>((state) => state.app.status)
     const isInitialized = useSelector<AppRootStateType, boolean>((state) => state.app.isInitialized)
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
     const dispatch = useDispatch()
-    const isLoggedIn = useSelector<AppRootStateType, boolean>( state => state.auth.isLoggedIn)
-
 
     useEffect(() => {
         dispatch(initializeAppTC())
@@ -47,7 +45,6 @@ function App({demo = false}: PropsType) {
         </div>
     }
 
-
     return (
         <BrowserRouter>
             <div className="App">
@@ -58,19 +55,15 @@ function App({demo = false}: PropsType) {
                             <Menu/>
                         </IconButton>
                         <Typography variant="h6">
-                            To do list
+                            News
                         </Typography>
                         {isLoggedIn && <Button color="inherit" onClick={logoutHandler}>Log out</Button>}
                     </Toolbar>
                     {status === 'loading' && <LinearProgress/>}
                 </AppBar>
                 <Container fixed>
-                    <Switch>
-                        <Route exact path={'/'} render={() => <TodolistsList demo={demo}/>}/>
-                        <Route path={'/login'} render={() => <Login/>}/>
-                        <Route path={'/404'} render={() => <h1>Error 404: Page not found</h1>}/>
-                        <Redirect from={'*'} to={'/404'}/>
-                    </Switch>
+                    <Route exact path={'/'} render={() => <TodolistsList demo={demo}/>}/>
+                    <Route path={'/login'} render={() => <Login/>}/>
                 </Container>
             </div>
         </BrowserRouter>

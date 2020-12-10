@@ -24,8 +24,9 @@ type PropsType = {
 export const TodolistsList: React.FC<PropsType> = ({demo = false}) => {
     const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
-    const dispatch = useDispatch()
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+
+    const dispatch = useDispatch()
 
     useEffect(() => {
         if (demo || !isLoggedIn) {
@@ -56,7 +57,7 @@ export const TodolistsList: React.FC<PropsType> = ({demo = false}) => {
     }, [])
 
     const changeFilter = useCallback(function (value: FilterValuesType, todolistId: string) {
-        const action = changeTodolistFilterAC({id: todolistId, filter: value})
+        const action = changeTodolistFilterAC({ id: todolistId, filter: value})
         dispatch(action)
     }, [])
 
@@ -76,20 +77,20 @@ export const TodolistsList: React.FC<PropsType> = ({demo = false}) => {
     }, [dispatch])
 
     if (!isLoggedIn) {
-        return <Redirect to={'/login'}/>
+        return <Redirect to={"/login"} />
     }
 
     return <>
         <Grid container style={{padding: '20px'}}>
             <AddItemForm addItem={addTodolist}/>
         </Grid>
-        <Grid container spacing={5}>
+        <Grid container spacing={3}>
             {
                 todolists.map(tl => {
                     let allTodolistTasks = tasks[tl.id]
 
                     return <Grid item key={tl.id}>
-                        <Paper elevation={2} style={{padding: '10px'}}>
+                        <Paper style={{padding: '10px'}}>
                             <Todolist
                                 todolist={tl}
                                 tasks={allTodolistTasks}
